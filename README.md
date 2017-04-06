@@ -11,4 +11,4 @@ Please view the [CDMS Project](https://github.com/cloudmesh/sp17-i524/tree/maste
 ## Acknowledgments
 
 * [INFO-I524](https://cloudmesh.github.io/classes/i524/index.html)
-* [Martin F. Jarrold Research Group](http://www.indiana.edu/~nano/)
+* [Martin F. Jarrold Research Group](http://www.indiana.edu/~nano/home)
