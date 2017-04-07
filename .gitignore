@@ -87,3 +87,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# fortran object files
+*.o
+
+# fortran executables
+trap
+trap_omp
