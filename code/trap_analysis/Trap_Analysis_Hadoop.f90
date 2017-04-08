@@ -1,7 +1,6 @@
     PROGRAM FFT
     USE mkl_dfti
     USE trap_mod
-    USE omp_lib
     IMPLICIT NONE
      
    !REAL(4), PARAMETER :: PI = 3.14159265                            
@@ -193,41 +192,41 @@
 
 !=========================================================================================
 
-    PRINT *, 'Start'
+    !PRINT *, 'Start'
     
 !Open file to store user input
     unit = 97
     filename = 'user_input_Sep15_2014.txt'
-    OPEN (UNIT=unit, FILE=filename, STATUS="replace", ACTION="write", IOSTAT=status)
+    !OPEN (UNIT=unit, FILE=filename, STATUS="replace", ACTION="write", IOSTAT=status)
     
 !User selected channel option or test signal
-    PRINT *, "Press 1 for Channel A..."
-    PRINT *, "Press 2 for Channel B (NOT SUPPORTED)..."
-    PRINT *, "Press 3 to add a test signal onto a noise file and analyze..."
-    PRINT *, "Press 4 for simulated data options..."    
-    PRINT *, "Press 5 to perform FFT on selected file and section..."
-    PRINT *, "Press 6 to output freq data for all files..."
-    PRINT *, "Press 7 to scan all files for frequency shift > 20 Hz..."
-    PRINT *, "Press 8 to output freq data for selected mass range and time trapped..."
-    PRINT *, "Press 9 for trap calibration options..."
-    PRINT *, "Press 10 for noise analysis..."
-    PRINT *, "Press 11 for voltage calibration..."
-    PRINT *, "Press 12 to add a test signal onto multiple noise files and analyze..."
+    !PRINT *, "Press 1 for Channel A..."
+    !PRINT *, "Press 2 for Channel B (NOT SUPPORTED)..."
+    !PRINT *, "Press 3 to add a test signal onto a noise file and analyze..."
+    !PRINT *, "Press 4 for simulated data options..."    
+    !PRINT *, "Press 5 to perform FFT on selected file and section..."
+    !PRINT *, "Press 6 to output freq data for all files..."
+    !PRINT *, "Press 7 to scan all files for frequency shift > 20 Hz..."
+    !PRINT *, "Press 8 to output freq data for selected mass range and time trapped..."
+    !PRINT *, "Press 9 for trap calibration options..."
+    !PRINT *, "Press 10 for noise analysis..."
+    !PRINT *, "Press 11 for voltage calibration..."
+    !PRINT *, "Press 12 to add a test signal onto multiple noise files and analyze..."
     !READ *, channel
     channel = 1
-    WRITE (97,*) "Press 1 for Channel A..."
-    WRITE (97,*) "Press 2 for Channel B (NOT SUPPORTED)..."
-    WRITE (97,*) "Press 3 to add a test signal onto a noise file and analyze..."
-    WRITE (97,*) "Press 4 for simulated data options..."    
-    WRITE (97,*) "Press 5 to perform FFT on selected file and section..."
-    WRITE (97,*) "Press 6 to output freq data for all files..."
-    WRITE (97,*) "Press 7 to scan all files for frequency shift > 20 Hz..."
-    WRITE (97,*) "Press 8 to output freq data for selected mass range and time trapped..."
-    WRITE (97,*) "Press 9 for trap calibration options..."
-    WRITE (97,*) "Press 10 for noise analysis..."
-    WRITE (97,*) "Press 11 for voltage calibration..."
-    WRITE (97,*) "Press 12 to add a test signal onto multiple noise files and analyze..."
-    WRITE (97,*) channel
+    !WRITE (97,*) "Press 1 for Channel A..."
+    !WRITE (97,*) "Press 2 for Channel B (NOT SUPPORTED)..."
+    !WRITE (97,*) "Press 3 to add a test signal onto a noise file and analyze..."
+    !WRITE (97,*) "Press 4 for simulated data options..."    
+    !WRITE (97,*) "Press 5 to perform FFT on selected file and section..."
+    !WRITE (97,*) "Press 6 to output freq data for all files..."
+    !WRITE (97,*) "Press 7 to scan all files for frequency shift > 20 Hz..."
+    !WRITE (97,*) "Press 8 to output freq data for selected mass range and time trapped..."
+    !WRITE (97,*) "Press 9 for trap calibration options..."
+    !WRITE (97,*) "Press 10 for noise analysis..."
+    !WRITE (97,*) "Press 11 for voltage calibration..."
+    !WRITE (97,*) "Press 12 to add a test signal onto multiple noise files and analyze..."
+    !WRITE (97,*) channel
     
 !Delete user input file for channel 11 since no user input is required
     IF (channel == 11) CLOSE (UNIT=97, STATUS='DELETE')
@@ -252,17 +251,17 @@
     IF  (channel < 11 .OR. channel == 12)   THEN          
         
         ! User selected option for maximum potential trapping time (determined by experiment) 
-        PRINT *, "How long is one period (in ms)?"
+        !PRINT *, "How long is one period (in ms)?"
         !READ *, length_multiplier
         length_multiplier = 95
-        WRITE (97,*) "How long is one period (in ms)?"
-        WRITE (97,*), length_multiplier
+        !WRITE (97,*) "How long is one period (in ms)?"
+        !WRITE (97,*), length_multiplier
         
-        PRINT *, "How long is maximum trapping time (in ms)?"
+        !PRINT *, "How long is maximum trapping time (in ms)?"
         !READ *, max_trap_time
         max_trap_time = 94
-        WRITE (97,*) "How long is maximum trapping time (in ms)?"
-        WRITE (97,*) max_trap_time   
+        !WRITE (97,*) "How long is maximum trapping time (in ms)?"
+        !WRITE (97,*) max_trap_time   
         
         load_time = length_multiplier - max_trap_time
                 
@@ -276,42 +275,42 @@
     IF  (channel == 1 .OR. channel == 2 .OR. channel == 8 .OR. channel == 12)    THEN
                           
         IF (channel /= 12) THEN  
-            PRINT *, "Enter run number..."
+            !PRINT *, "Enter run number..."
             !READ *, run
             run = 8
-            WRITE (97,*) "Enter run number..."
-            WRITE (97,*) run
+            !WRITE (97,*) "Enter run number..."
+            !WRITE (97,*) run
             WRITE (run_number, "(I2.2)") run
             
             ! Open file to output identity of single, multiple, and no ion trapping events
             IF (channel /= 8) THEN      ! For channel 8, open this in "Frequency_Data"
                 unit = 20
                 filename = 'event_types_Sep15_2014_run'//TRIM(run_number)//'.txt'
-                CALL open_new_file (unit, filename)
+                !CALL open_new_file (unit, filename)
             END IF
                
             ! Open file to store peak data for all signals found
             unit = 21
             filename = 'peaks_Sep15_2014_run'//TRIM(run_number)//'.txt'
-            CALL open_new_file (unit, filename)
+            !CALL open_new_file (unit, filename)
             
             ! Open file to store verbose data info for windowed data
             unit = 22
             filename = 'data_Sep15_2014_run'//TRIM(run_number)//'.txt'
-            CALL open_new_file (unit, filename)
+            !CALL open_new_file (unit, filename)
             
             ! Open file to store good ion data info for windowed data
             unit = 23
             filename = 'data_Sep15_2014_filtered_run'//TRIM(run_number)//'.txt'
-            CALL open_new_file (unit, filename)
+            !CALL open_new_file (unit, filename)
             
             ! Headers for verbose output files
             IF (channel /= 8) THEN
-                WRITE (20,210) "Single_Ion_File","Section_#","Multiple_Ion_File","Section_#","No_Ion_File","Section_#"
+                !WRITE (20,210) "Single_Ion_File","Section_#","Multiple_Ion_File","Section_#","No_Ion_File","Section_#"
                 210 FORMAT (A15, TR3, A9, TR3, A17, TR5, A9, TR3, A17, TR5, A9, TR3)
             END IF
             
-            WRITE (21,220) "File", "Section_#", "Signal_Length", "Max_Freq", "Magnitude"
+            !WRITE (21,220) "File", "Section_#", "Signal_Length", "Max_Freq", "Magnitude"
             220 FORMAT (A4, TR10, A10, TR5, A13, T49, A9, T71, A10)
             
 !            WRITE (22,230) "File", "Section_#", " Signal_End ", "End_Time_(s)", "Cycles", "#_Points_Avgd", "Freq_Avg", &
@@ -328,16 +327,16 @@
 !               & "Harm2_Rel_Mag_Avg", "Harm2_Rel_Mag_Std_Dev"
 !            230 FORMAT (T3, A4, T15, A10, TR4, A12, TR5, A13, TR6, A8, TR7, A10, TR7, A8, TR4, A11, TR8, &
 !                   & A3, TR9, A11, TR6, A6, TR3, A14, TR8, A4, TR8, A22, TR2, A22, TR2)
-            WRITE (22,230) "File", "Section_#", "End_Time_(s)", "#_Points_Avgd", "Freq_Avg", "Freq_Slope", "Freq_Rel_Slope", "Freq_Sum_Sq", &
-               & "m/z", "m/z_Std_Dev", "Charge", "Charge_Std_Dev", "Mass", &
-               & "Harm2_Rel_Mag_Avg", "Harm2_Rel_Mag_Std_Dev"
+            !WRITE (22,230) "File", "Section_#", "End_Time_(s)", "#_Points_Avgd", "Freq_Avg", "Freq_Slope", "Freq_Rel_Slope", "Freq_Sum_Sq", &
+!               & "m/z", "m/z_Std_Dev", "Charge", "Charge_Std_Dev", "Mass", &
+!               & "Harm2_Rel_Mag_Avg", "Harm2_Rel_Mag_Std_Dev"
             230 FORMAT (T3, A4, T15, A10, TR4, A12, TR5, A13, TR6, A8, TR7, A10, TR7, A14, TR4, A11, TR8, &
                    & A3, TR9, A11, TR6, A6, TR3, A14, TR8, A4, TR8, A22, TR2, A22, TR2)
                    
                    
-            WRITE (23,280) "File", "Section_#", "End_Time_(s)", "#_Points_Avgd", "Freq_Avg", "Freq_Slope", "Freq_Rel_Slope", "Freq_Sum_Sq", &
-               & "m/z", "m/z_Std_Dev", "Charge", "Charge_Std_Dev", "Mass", &
-               & "Harm2_Rel_Mag_Avg", "Harm2_Rel_Mag_Std_Dev"
+            !WRITE (23,280) "File", "Section_#", "End_Time_(s)", "#_Points_Avgd", "Freq_Avg", "Freq_Slope", "Freq_Rel_Slope", "Freq_Sum_Sq", &
+!               & "m/z", "m/z_Std_Dev", "Charge", "Charge_Std_Dev", "Mass", &
+!               & "Harm2_Rel_Mag_Avg", "Harm2_Rel_Mag_Std_Dev"
             280 FORMAT (T3, A4, T15, A10, TR4, A12, TR5, A13, TR6, A8, TR7, A10, TR7, A14, TR4, A11, TR8, &
                    & A3, TR9, A11, TR6, A6, TR3, A14, TR8, A4, TR8, A22, TR2, A22, TR2)
         END IF
@@ -362,11 +361,11 @@
         ! User selected option for number of files in each run (maximum = 100)  ! That statement is obsolete.
         ! Maximum number of files is only limited by how the code is currently written
         ! Can be increased by adding extra code to associated "DO" loop below
-        PRINT *, "Enter last file number..."
+        !PRINT *, "Enter last file number..."
         !READ *, number_of_files  
         number_of_files = 10199
-        WRITE (97,*) "Enter last file number..."
-        WRITE (97,*) number_of_files
+        !WRITE (97,*) "Enter last file number..."
+        !WRITE (97,*) number_of_files
         number_of_files = number_of_files + 1 - 10000       ! + 1 - 10000 because files start at 10000.
         
         ! Allocate each of following arrays with maximum number of trapping events in run
@@ -572,41 +571,10 @@
 
         files_analyzed = 0
        !write(6,"(a,' :  564 : thread=',i4)") procname,mythrd        !DKB-debug
-
-        ! OpenMP (multithreading) lines begin with !$. Any other lines beginning with ! are comments.     
-        !$OMP PARALLEL DEFAULT(none) &
-        !$OMP SHARED(files_analyzed, number_of_files, fmt, channel, length_multiplier, max_trap_time, load_time, expt_num, dead_time) &
-        !$OMP SHARED(total_events, total_single_events, total_multiple_events, total_empty_events, low_mass_cutoff, high_mass_cutoff, sig_cutoff) &
-        !$OMP SHARED(old_square_total_real, signal_end, sq_wave_array) &
-        !$OMP SHARED(single_ion_filename, single_ion_section, multiple_ion_filename, multiple_ion_section, no_ion_filename, no_ion_section) &
-        !$OMP PRIVATE(mythrd)
-
-        !DKB-debug: The following shared variables are allocatable arrays:
-        !DKB-debug:    single_ion_filename,    single_ion_section,
-        !DKB-debug:    multiple_ion_filename,  multiple_ion_section,
-        !DKB-debug:    no_ion_filename,        no_ion_section
-
-        !xxxSHARED(filename_array, n_main_array, final_signal_end_array, end_time_array, cycles_array, points_to_average_array) & 
-        !xxxSHARED(freq_avg_array, freq_std_dev_array, mass_to_charge_array, mass_to_charge_std_dev_array) &
-        !xxxSHARED(charge_array, charge_std_dev_array, mass_array, mass_std_dev_array, i)
-
-!#ifdef _OPENMP                         !DKB-deug
-!        mythrd = omp_get_thread_num()  !DKB-deug
-!#endif                                 !DKB-deug
-        !$OMP DO PRIVATE(filename, file_number, unit, stat, ytmp, y_input, input_array, derivative, n_main) &
-        !$OMP PRIVATE (derivative_peak, charge, der_opt, fft_filter_output, i, j, single_event, multiple_event, od) &
-        !$OMP PRIVATE (derivative_peaks, pos_peaks, neg_peaks, section, input) &
-        !$OMP PRIVATE (rand_5) &
-        
-        !xxxPRIVATE(final_signal_end, end_time, cycles, points_to_average, freq_avg, freq_std_dev) &
-        !xxxPRIVATE(mass_to_charge, mass_to_charge_std_dev, charge, charge_std_dev, mass, mass_std_dev) &
-        
-        !$OMP SCHEDULE(guided)
-        !xxxx SCHEDULE(static)
     
         ! This DO loop assigns name of datafile to open
         ! This streamlines data acquisition and analysis
-        DO  i = 0, number_of_files-1
+        DO  i = 0, 0 !number_of_files-1
                         
             ! Open input file
             unit = i + 10000               
@@ -614,8 +582,7 @@
             ! If files are .dat then use the following to open
             ! ================================================
             input_array = 0
-              
-            !$OMP CRITICAL (READ_FILE)
+
               
            !IF  (channel == 1)  THEN
            !    WRITE (file_number, fmt) i+10000
@@ -625,11 +592,12 @@
            !    filename = 'chB'//TRIM(file_number)//'.dat'
            !END IF
          
-            WRITE (file_number, fmt) unit
+!            WRITE (file_number, fmt) unit
+            unit = 5
             filename = 'chA'//TRIM(file_number)//'.dat'
             !write(6,"(a,' :  619 : thread=',i4,'  file=',a)") procname,mythrd,TRIM(filename)   !DKB-debug
              
-            OPEN (UNIT=unit, FILE=filename, STATUS="old", ACTION="read", IOSTAT=stat, FORM="binary") 
+            OPEN (UNIT=unit, STATUS="old", ACTION="read", IOSTAT=stat, FORM="binary") 
                 ! FORM="unformatted" allows Fortran to interpret binary files properly.
             
            !INQUIRE (UNIT=unit, OPENED=od)
@@ -643,10 +611,10 @@
             y_input(NPTS10+1:NPTS) = 0
             
             files_analyzed = files_analyzed + 1
-            PRINT *, "Now reading from ", TRIM(filename)
-            PRINT *, files_analyzed, "/", number_of_files            
+            !PRINT *, "Now reading from ", TRIM(filename)
+            !PRINT *, files_analyzed, "/", number_of_files            
 
-            !$OMP END CRITICAL (READ_FILE)
+
             ! ================================================   
                         
             !Switch each pair of points since each pair gets switched in the data file
@@ -831,14 +799,9 @@
 
    15       CONTINUE
             
-            !$OMP CRITICAL (CLOSE_FILE)
             CLOSE (unit)
-            !$OMP END CRITICAL (CLOSE_FILE)
             
-        END DO
-        !$OMP END DO
-        !$OMP END PARALLEL    
-        
+        END DO        
         
         !Call end clock time to determine program running time
         !total_time is in seconds
@@ -846,18 +809,18 @@
         total_time = (end_run_time - start_run_time) / 1.E6
 
         !Write program running time to "complete peak data" file
-        WRITE(21,222) "End: Program running time =", total_time, "seconds"
-        WRITE(21,223) "Single ion trapping events =", total_single_events, "/", total_events
-        WRITE(21,224) "Multiple ion trapping events =", total_multiple_events, "/", total_events
-        WRITE(21,225) "No ion trapping events =", (total_events - total_multiple_events - total_single_events), "/", total_events
+        !WRITE(21,222) "End: Program running time =", total_time, "seconds"
+        !WRITE(21,223) "Single ion trapping events =", total_single_events, "/", total_events
+        !WRITE(21,224) "Multiple ion trapping events =", total_multiple_events, "/", total_events
+        !WRITE(21,225) "No ion trapping events =", (total_events - total_multiple_events - total_single_events), "/", total_events
   222   FORMAT(/, A27, TR5, F11.2, TR5, A7)
   223   FORMAT(/, A28, TR5, I7, A1, I7)
   224   FORMAT(/, A30, TR5, I7, A1, I7)
   225   FORMAT(/, A24, TR5, I7, A1, I7)
     
         !Close all output files and keep them (i.e., don't delete them)
-        CLOSE (21, STATUS = "KEEP")
-        CLOSE (22, STATUS = "KEEP")  
+        !CLOSE (21, STATUS = "KEEP")
+        !CLOSE (22, STATUS = "KEEP")  
         
             
 !===============================================================================
@@ -1574,14 +1537,14 @@
             IF (no_ion_filename(i) == '0') THEN
                 no_ion_filename(i) = ''; no_ion_section_char = ''
             END IF
-            WRITE (20, 693) single_ion_filename(i), single_ion_section_char(i), multiple_ion_filename(i), multiple_ion_section_char(i), no_ion_filename(i), no_ion_section_char(i)
+            !WRITE (20, 693) single_ion_filename(i), single_ion_section_char(i), multiple_ion_filename(i), multiple_ion_section_char(i), no_ion_filename(i), no_ion_section_char(i)
             693 FORMAT (A12, TR6, A4, TR8, A12, TR10, A4, TR14, A12, TR4, A4)
         END DO
         CLOSE (UNIT=20, STATUS='KEEP')
     END IF
     
  !Print program running time to screen
-    PRINT *, "End: Program running time=", total_time, " seconds"          
+    !PRINT *, "End: Program running time=", total_time, " seconds"          
        
     !PAUSE "Press Enter to continue..."
     
@@ -1619,7 +1582,7 @@
     
     OPEN (UNIT=new_unit, FILE=new_name, STATUS="replace", ACTION="write", IOSTAT=status)
            ! What do STATUS="replace", ACTION="write", and IOSTAT=status mean?
-    PRINT *, "Error creating file? ", new_name, "-0- means success! ", status
+    !PRINT *, "Error creating file? ", new_name, "-0- means success! ", status
     END SUBROUTINE open_new_file
     
        
@@ -1693,7 +1656,6 @@
     SUBROUTINE fft_filter(fft_input, fft_filter_output)
     USE mkl_dfti
     USE trap_mod
-    USE omp_lib     !DKB-debug
     IMPLICIT NONE
 
    !INTEGER, PARAMETER :: NPTS = 1048576                  !Number of datapoints
@@ -1709,9 +1671,6 @@
     INTEGER  :: mythrd = 0            !DKB-debug
     CHARACTER(12), PARAMETER :: procname="fft_filter"  !DKB-debug
 
-!#ifdef _OPENMP                        !DKB-debug
-!    mythrd = omp_get_thread_num()     !DKB-debug
-!#endif                                !DKB-debug
     !write(6,"(a,' : 1693 : thread=',i4,'  npts=',i8)") procname,mythrd,npts   !DKB-debug
     ALLOCATE(fft_forward_output(NPTS))
 
@@ -1759,7 +1718,6 @@
     SUBROUTINE ten_khz_fft_filter(fft_input, fft_filter_output)
     USE mkl_dfti
     USE trap_mod
-    USE omp_lib     !DKB-debug
     IMPLICIT NONE
 
    !INTEGER, PARAMETER :: NPTS = 1048576                !Number of datapoints
@@ -1773,9 +1731,6 @@
 
     INTEGER  :: mythrd = 0            !DKB-debug
     CHARACTER(12), PARAMETER :: procname="ten_khz_fft*"  !DKB-debug
-!#ifdef _OPENMP                        !DKB-debug
-!    mythrd = omp_get_thread_num()     !DKB-debug
-!#endif                                !DKB-debug
 
     !write(6,"(a,' : 1751 : thread=',i4,'  npts=',i8)") procname,mythrd,npts   !DKB-debug
     ALLOCATE(fft_forward_output(NPTS))

@@ -87,13 +87,21 @@ trap_omp: dummy
               "EXTRAOBJ=" \
               "LIBS= -mkl=sequential"
 
+trap_hadoop: dummy
+	make -f $(MAKEFILE) target "TARGET=trap_hadoop" "FC=$(F95)" \
+              "FEATURES=" \
+              "MODOBJ=$(MODOBJ)" \
+              "OBJ=$(OBJC) NCC_Peakfinder_VI_Hadoop.o Trap_Analysis_Hadoop.o" \
+              "EXTRAOBJ=" \
+              "LIBS= -mkl=sequential"
+
 dummy:
 
 clean:
 	rm -f *.o work/*.f90 work/*.mod
 
 realclean:
-	rm -f *.o work/*.f90 work/*.mod trap trap_omp
+	rm -f *.o work/*.f90 work/*.mod trap trap_omp trap_hadoop
 
 #===============================================================================
 #     Each make of a program sets several macros, and then recursively calls
@@ -133,6 +141,9 @@ Mag_Cutoff_69k_Datapoints.o: Mag_Cutoff_69k_Datapoints.F90
 NCC_Peakfinder_VI.o: NCC_Peakfinder_VI.F90
 	$(FC) -c $(FCFLAGS) NCC_Peakfinder_VI.F90
 
+NCC_Peakfinder_VI_Hadoop.o: NCC_Peakfinder_VI_Hadoop.F90
+	$(FC) -c $(FCFLAGS) NCC_Peakfinder_VI_Hadoop.F90
+
 Noise_Analysis.o: Noise_Analysis.F90
 	$(FC) -c $(FCFLAGS) Noise_Analysis.F90
 
@@ -142,8 +153,8 @@ Simulations.o: Simulations.F90
 Trap_Analysis.o: Trap_Analysis.f90
 	$(FC) -c $(FCFLAGS) Trap_Analysis.f90
 
-Trap_Analysis_03.o: Trap_Analysis_03.F90
-	$(FC) -c $(FCFLAGS) Trap_Analysis_03.F90
+Trap_Analysis_Hadoop.o: Trap_Analysis_Hadoop.f90
+	$(FC) -c $(FCFLAGS) Trap_Analysis_Hadoop.f90
 
 Trap_Charge_Calibration.o: Trap_Charge_Calibration.f90
 	$(FC) -c $(FCFLAGS) Trap_Charge_Calibration.f90
@@ -159,6 +170,3 @@ mkl_dfti.o: mkl_dfti.f90
 
 omp_lib.o: omp_lib.f
 	$(FC) -c $(FCFLAGS) omp_lib.f
-
-#omp_lib_ser.o: omp_lib_ser.f90
-#	$(FC) -c $(FCFLAGS) omp_lib_ser.f90

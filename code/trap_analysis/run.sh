@@ -35,7 +35,7 @@ echo =============================================
 export OMP_STACKSIZE=100M
 export OMP_NUM_THREADS=16
 echo OMP_STACKSIZE=$OMP_STACKSIZE
-echo OMP_NUM_THREADS=$OMP_STACKSIZE
+echo OMP_NUM_THREADS=$OMP_NUM_THREADS
 
 echo
 echo =============================================
