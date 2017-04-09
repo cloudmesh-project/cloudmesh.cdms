@@ -94,3 +94,4 @@ ENV/
 # fortran executables
 trap
 trap_omp
+trap_hadoop

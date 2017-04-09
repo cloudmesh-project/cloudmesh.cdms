@@ -189,7 +189,6 @@
     INTEGER :: mythrd = 0            !DKB-debug
     CHARACTER(12), PARAMETER :: procname="TrapAn03"  !DKB-debug
 
-
 !=========================================================================================
 
     !PRINT *, 'Start'
@@ -597,19 +596,20 @@
             filename = 'chA'//TRIM(file_number)//'.dat'
             !write(6,"(a,' :  619 : thread=',i4,'  file=',a)") procname,mythrd,TRIM(filename)   !DKB-debug
              
-            OPEN (UNIT=unit, STATUS="old", ACTION="read", IOSTAT=stat, FORM="binary") 
+            !OPEN (UNIT=unit, STATUS="old", ACTION="read", IOSTAT=stat, FORM="binary") 
+            OPEN (UNIT=unit, STATUS="old", ACTION="read", IOSTAT=stat, FORM="FORMATTED") 
                 ! FORM="unformatted" allows Fortran to interpret binary files properly.
-            
            !INQUIRE (UNIT=unit, OPENED=od)
            !IF  (.NOT. od)  THEN
            !   GOTO 15
            !ELSE
-               READ (unit, END=8) input_array
-    8          CONTINUE
-           !END IF  
+            READ (*, *) input_array
+            !READ (unit, END=8) input_array
+8           CONTINUE
+           !END IF
             y_input(1:NPTS10) = input_array
             y_input(NPTS10+1:NPTS) = 0
-            
+
             files_analyzed = files_analyzed + 1
             !PRINT *, "Now reading from ", TRIM(filename)
             !PRINT *, files_analyzed, "/", number_of_files            

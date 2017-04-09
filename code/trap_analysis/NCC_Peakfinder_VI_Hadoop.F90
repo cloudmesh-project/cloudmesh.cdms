@@ -243,7 +243,7 @@ IF (channel == 1 .OR. channel == 2 .OR. channel == 5 .OR. channel == 8 .OR. chan
     peak_start = 0
     peak_end = 0
     local_max = 0
-    
+
     temp_signal_end = length_multiplier*2500
     
     ! Since this initial transform gets zero-filled to 1048576 points, use freq_mult = 16. When windows begin further down, this changes
@@ -1226,7 +1226,7 @@ END IF
 !        2500 FORMAT (A12, T19, I2, TR8, F11.9, TR7, I6, TR9, F11.2, TR7, ES12.5, TR2, F11.2, TR3, F11.5, TR6 &
 !                    & F11.3, TR4, F11.3, TR6, F7.2, TR5, F7.2, TR5, F15.2, TR2, &
 !                    & F22.6, TR2, F22.6, TR2)
-        WRITE (6,2500)  filename, section, end_time, points_to_average, freq_avg, frequency_slope, frequency_relative_slope, frequency_sum_sq, &
+       WRITE (*,2500)  filename, section, end_time, points_to_average, freq_avg, frequency_slope, frequency_relative_slope, frequency_sum_sq, &
                          & mass_to_charge, mass_to_charge_std_dev, charge, charge_std_dev, mass, &
                          & harm2_rel_mag_avg, harm2_rel_mag_std_dev
         2500 FORMAT (A12, T19, I2, TR8, F11.9, TR7, I6, TR9, F11.2, TR7, ES12.5, TR7, ES12.5, TR3, F11.5, TR6 &
