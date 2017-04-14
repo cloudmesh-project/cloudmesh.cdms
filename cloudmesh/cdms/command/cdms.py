@@ -3,7 +3,7 @@ from cloudmesh.shell.command import command
 from cloudmesh.shell.command import PluginCommand
 
 
-class CDMSCommand(PluginCommand):
+class CdmsCommand(PluginCommand):
 
     @command
     def do_cdms(self, args, arguments):
