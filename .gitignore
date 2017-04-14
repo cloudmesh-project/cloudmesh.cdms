@@ -95,3 +95,6 @@ ENV/
 trap
 trap_omp
 trap_hadoop
+
+# emacs tmp files
+*~

@@ -1,7 +1,9 @@
 from __future__ import print_function
 from cloudmesh.shell.command import command
 from cloudmesh.shell.command import PluginCommand
-
+from cloudmesh.common.dotdict import dotdict
+import subprocess
+from subprocess import Popen, PIPE
 
 class CdmsCommand(PluginCommand):
 
@@ -11,20 +13,44 @@ class CdmsCommand(PluginCommand):
         ::
 
           Usage:
-                cdms -f FILE
-                cdms FILE
-                cdms list
+                cdms [build|run_hadoop|run_omp|clean|realclean]
 
-          This command does some useful things.
+          This command helps build, run and clean the CDMS application.
 
           Arguments:
-              FILE   a file name
+              build       builds the executable
+              run_hadoop  runs the hadoop executable
+              run_omp     runs the omp executable
+              clean       removes object files
+              realclean   removes object files and executables
 
           Options:
-              -f      specify the file
 
         """
-        print(arguments)
-
-
-
+        arguments = dotdict(arguments)
+        if arguments.build:
+            print("Building Executables")
+            p = Popen(['echo', 'make trap_omp && make clean && make trap_hadoop'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        elif arguments.run_hadoop:
+            print("Running Hadoop Application")
+            p = Popen(['echo', './trap_hadoop'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        elif arguments.run_omp:
+            print("Running OpenMP Application")
+            p = Popen(['echo', './trap_omp'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        elif arguments.clean:
+            print("Cleaning (skipping executables)")
+            p = Popen(['echo', 'make clean'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        elif arguments.realclean:
+            print("Cleaning")
+            p = Popen(['echo', 'make realclean'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        else: 
+            print("error")
+            p = Popen(['echo', '...'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            
+        output, err = p.communicate()
+        rc = p.returncode
+        if (rc == 0):
+            print(output)
+        else:
+            print(err)
+            
