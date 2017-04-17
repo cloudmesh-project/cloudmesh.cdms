@@ -30,7 +30,7 @@ class CdmsCommand(PluginCommand):
         arguments = dotdict(arguments)
         if arguments.build:
             print("Building Executables")
-            p = Popen(['echo', 'make trap_omp && make clean && make trap_hadoop'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['source /home/cc/intel/bin/compilervars.sh intel64 && cd /home/cc/cloudmesh.cdms-master/code/trap_analysis && make realclean && make trap_hadoop && make clean && make trap_omp'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
         elif arguments.run_hadoop:
             print("Running Hadoop Application")
             p = Popen(['echo', './trap_hadoop'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
