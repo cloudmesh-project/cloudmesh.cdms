@@ -30,22 +30,22 @@ class CdmsCommand(PluginCommand):
         arguments = dotdict(arguments)
         if arguments.build:
             print("Building Executables")
-            p = Popen(['.', '/home/cc/intel/bin/compilervars.sh', 'intel64', '&&', 'cd', '/home/cc/cloudmesh.cdms-master/code/trap_analysis', '&&', 'make', 'realclean', '&&', 'make', 'trap_hadoop', '&&', 'make', 'clean', '&&', 'make', 'trap_omp'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['.', '/home/cc/intel/bin/compilervars.sh', 'intel64', '&&', 'cd', '/home/cc/cloudmesh.cdms-master/code/trap_analysis', '&&', 'make', 'realclean', '&&', 'make', 'trap_hadoop', '&&', 'make', 'clean', '&&', 'make', 'trap_omp'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         elif arguments.run_hadoop:
             print("Running Hadoop Application")
-            p = Popen(['echo', './trap_hadoop'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['echo', './trap_hadoop'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         elif arguments.run_omp:
             print("Running OpenMP Application")
-            p = Popen(['echo', './trap_omp'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['ls', '-lah'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         elif arguments.clean:
             print("Cleaning (skipping executables)")
-            p = Popen(['echo', 'make clean'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['cd', '/home/cc/cloudmesh.cdms-master/code/trap_analysis', ';',  'make', 'clean'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         elif arguments.realclean:
             print("Cleaning")
-            p = Popen(['echo', 'make realclean'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['cd', '/home/cc/cloudmesh.cdms-master/code/trap_analysis', '&&', 'make', 'realclean'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         else: 
             print("error")
-            p = Popen(['echo', '...'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            p = Popen(['echo', '...'], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
             
         output, err = p.communicate()
         rc = p.returncode
