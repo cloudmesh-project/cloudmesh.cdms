@@ -50,8 +50,8 @@ else:
       for y in range(x+1, len(data)):
          fig, ax = plt.subplots()
          ax.scatter(data[x], data[y], color=colors[randint(0, len(colors)-1)], marker=markers[randint(0, len(markers)-1)])
-         fig.suptitle('Charge Detection Mass Spectrometry Test Dataset', fontsize=20)
-         plt.xlabel(labels[x], fontsize=16)
-         plt.ylabel(labels[y], fontsize=16)
+         fig.suptitle('CDMS Hadoop Results (Test Dataset)', fontsize=12)
+         plt.xlabel(labels[x], fontsize=10)
+         plt.ylabel(labels[y], fontsize=10)
          fig.savefig("plot"+str(x)+"-"+str(y)+".png")
          plt.close(fig)            
