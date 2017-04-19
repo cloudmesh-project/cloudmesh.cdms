@@ -50,6 +50,8 @@ else:
       for y in range(x+1, len(data)):
          fig, ax = plt.subplots()
          ax.scatter(data[x], data[y], color=colors[randint(0, len(colors)-1)], marker=markers[randint(0, len(markers)-1)])
+         ax.ticklabel_format(axis='y', style='sci', scilimits=(-2,3))
+         ax.ticklabel_format(axis='x', style='sci', scilimits=(-2,3))
          fig.suptitle('CDMS Hadoop Results (Test Dataset)', fontsize=12)
          plt.xlabel(labels[x], fontsize=10)
          plt.ylabel(labels[y], fontsize=10)
